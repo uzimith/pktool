@@ -1,6 +1,8 @@
 # Pktool
 
-TODO: Write a gem description
+1. パーティメモ
+2. ダメージ計算
+3. 素早さ判定
 
 ## Installation
 

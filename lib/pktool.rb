@@ -1,5 +1,6 @@
-require "pktool/version"
+require_relative 'pokemon'
+require_relative 'move'
 
 module Pktool
-  # Your code goes here...
+
 end

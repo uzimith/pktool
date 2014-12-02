@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Pktool::VERSION
   spec.authors       = ["uzimith"]
   spec.email         = ["uzimith.x9@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{pokemon battole support tool}
+  spec.summary       = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -20,4 +20,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "sequel"
+  spec.add_development_dependency "sqlite3"
 end
