@@ -1,11 +1,12 @@
+require 'json'
 require_relative "database"
 
 class Pokemon < Sequel::Model(:pokemon)
   attr_accessor :effort_value, :individual_value
 
-  def set(way)
+  def set(way, nature)
     @level = 50
-    @nature = "timid"
+    @nature = nature
     @individual_value = { H: 31, A: 31, B: 31, C: 31, D: 31, S: 31 }
     
     case way
@@ -16,20 +17,25 @@ class Pokemon < Sequel::Model(:pokemon)
     end
   end
 
-  def nature_value(name)
-    return 1.0
+  def nature_effect(name)
+    nature_effect = open("data/nature.json") do |io|
+      JSON.load(io, nil, { symbolize_names: true})
+    end
+    return 1.0 unless nature_effect[@nature]
+    return nature_effect[@nature][name]
   end
 
-  def status(name)
+  def statistics(name)
     case name
     when :H
-      ((self.H * 2 + @individual_value[:H] + @effort_value[:H] / 4 ) * @level / 100 ) + 10 + @level
+      statistics = ((self.H * 2 + @individual_value[:H] + @effort_value[:H] / 4 ) * @level / 100 ) + 10 + @level
     else
-      ((self.send(name) * 2 + @individual_value[name] + @effort_value[name] / 4 ) * @level / 100 ) + 5 # + nature_value(:none)
+      statistics = (((self.send(name) * 2 + @individual_value[name] + @effort_value[name] / 4 ) * @level / 100 ) + 5) * nature_effect(name)
     end
+    statistics.floor
   end
 
-  def status_all
-    [:H, :A, :B, :C, :D, :S].map { |name| [name, status(name)]}.to_h
+  def stats
+    [:H, :A, :B, :C, :D, :S].map { |name| [name, statistics(name)]}.to_h
   end
 end
