@@ -22,8 +22,6 @@ class Move < Sequel::Model(:move)
       attack_stat = :C
       defence_stat = :D
     end
-    p attacker.statistics(attack_stat)
-    p defender.statistics(defence_stat)
     # this equation may be mistake.
     base   = ((power * attacker.statistics(attack_stat) * (level * 2.0 / 5.0 + 2.0 )) / defender.statistics(defence_stat) / 50.0 * effect + 2.0) * type
     min    = base * vital * 0.85
