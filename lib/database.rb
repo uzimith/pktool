@@ -1,2 +1,5 @@
 require 'sequel'
-DB = Sequel.connect('sqlite://data/pokemonData.sqlite')
+
+module Pktool
+  DB = Sequel.connect('sqlite://data/pokemonData.sqlite')
+end

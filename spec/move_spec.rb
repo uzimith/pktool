@@ -1,6 +1,8 @@
 require_relative '../lib/move.rb'
 require_relative '../lib/pokemon.rb'
 
+include Pktool
+
 describe "Move" do
   it "should get the power and the type" do
     m = Move.where(name: "じしん").first

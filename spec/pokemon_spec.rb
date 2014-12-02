@@ -1,5 +1,7 @@
 require_relative '../lib/pokemon.rb'
 
+include Pktool
+
 describe "Pokemonn" do
   it "should calculate status without nature effect" do
     p = Pokemon.where(name: "ガブリアス").first
