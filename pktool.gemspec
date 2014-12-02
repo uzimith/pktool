@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sequel"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "termcolorlight"
+  spec.add_development_dependency "thor"
 end

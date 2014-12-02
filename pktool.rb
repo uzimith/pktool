@@ -1,2 +1,4 @@
 require_relative 'lib/log'
-error "test"
+require_relative 'lib/cli'
+
+Pktool::Cli.start(ARGV)
