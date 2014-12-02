@@ -32,6 +32,7 @@ describe "Move" do
     attacker.set(:hAS, :いじっぱり)
     defender = Pokemon.where(name: "ナットレイ").first
     defender.set(:HB, :ずぶとい)
-    expect(m.damage(attacker, defender)).to eq({min: 144, max: 172})
+    # expect(m.damage(attacker, defender)).to eq({min: 144, max: 172})
+    expect(m.damage(attacker, defender)).to eq({min: 148, max: 174})
   end
 end
