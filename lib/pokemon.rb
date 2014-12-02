@@ -12,6 +12,16 @@ class Pokemon < Sequel::Model(:pokemon)
     case way
     when :hAS
       @effort_value     = { H: 6, A: 252, B: 0, C: 0, D: 0, S: 252 }
+    when :hCS
+      @effort_value     = { H: 6, A: 0, B: 0, C: 252, D: 0, S: 252 }
+    when :HB
+      @effort_value     = { H: 252, A: 0, B: 252, C: 0, D: 0, S: 0 }
+    when :HD
+      @effort_value     = { H: 252, A: 0, B: 0, C: 0, D: 252, S: 0 }
+    when :HAs
+      @effort_value     = { H: 252, A: 252, B: 0, C: 0, D: 0, S: 6 }
+    when :HCs
+      @effort_value     = { H: 252, A: 0, B: 0, C: 252, D: 0, S: 6 }
     else
       @effort_value     = { H: 0, A: 0, B: 0, C: 0, D: 0, S: 0 }
     end
