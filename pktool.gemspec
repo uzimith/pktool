@@ -1,7 +1,7 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'pktool/version'
+require 'version'
 
 Gem::Specification.new do |spec|
   spec.name          = "pktool"
@@ -22,4 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "sequel"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "termcolorlight"
 end
