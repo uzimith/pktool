@@ -5,7 +5,9 @@ Dir.glob(File.expand_path(File.join(File.dirname(__FILE__), "command", "*.rb")))
 end
 
 module Pktool
+
   class Cli < Thor
     register(Pktool::Command::Party, "party", "party [COMMAND]", "パーティを編成する")
   end
+
 end
