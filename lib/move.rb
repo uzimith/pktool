@@ -2,6 +2,11 @@ require_relative "database"
 
 module Pktool
   class Move < Sequel::Model(:move)
+
+    def self.fetch(name)
+      self.where(name: name).first
+    end
+
     def damage(attacker, defender)
       level  = 50.0
       effect = 1.0
