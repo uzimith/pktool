@@ -3,7 +3,18 @@ require_relative "database"
 require_relative "exceptions"
 
 module Pktool
+
   class Pokemon < Sequel::Model(:pokemon)
+
+    class Nature < Sequel::Model(:nature)
+      def to_s
+        self.name.to_s
+      end
+      def to_sym
+        self.name.to_sym
+      end
+    end
+
     attr_accessor :nature, :effort_value, :individual_value, :ability, :item
     attr_accessor :description
     alias :ev :effort_value
@@ -22,7 +33,7 @@ module Pktool
 
     def set(feature)
       @description = feature[:description] || ""
-      @nature = feature[:nature] || :がんばりや
+      @nature = Nature[feature[:nature].to_s] || Nature["がんばりや"]
       @effort_value = feature[:effort_value] ||  { H: 0, A: 0, B: 0, C: 0, D: 0, S: 0 }
       @individual_value = feature[:individual_value] ||  { H: 31, A: 31, B: 31, C: 31, D: 31, S: 31 }
       @ability = feature[:ability] ||  1
@@ -49,20 +60,12 @@ module Pktool
       end
     end
 
-    def nature_effect(name)
-      nature_effect = open("data/nature.json") do |io|
-        JSON.load(io, nil, { symbolize_names: true})
-      end
-      return 1.0 unless nature_effect[@nature]
-      return nature_effect[@nature][name]
-    end
-
     def statistics(name)
       case name
       when :H
         statistics = ((self.H * 2 + @individual_value[:H] + @effort_value[:H] / 4 ) * @level / 100 ) + 10 + @level
       else
-        statistics = (((self.send(name) * 2 + @individual_value[name] + @effort_value[name] / 4 ) * @level / 100 ) + 5) * nature_effect(name)
+        statistics = (((self.send(name) * 2 + @individual_value[name] + @effort_value[name] / 4 ) * @level / 100 ) + 5) * @nature.send(name)
       end
       statistics.floor
     end
@@ -75,7 +78,7 @@ module Pktool
       {
         name: name,
         description: @description,
-        nature: @nature,
+        nature: @nature.to_sym,
         effort_value: @effort_value,
         individual_value: @individual_value,
         ability: @ability,

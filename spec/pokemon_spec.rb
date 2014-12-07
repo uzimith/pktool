@@ -2,7 +2,14 @@ require_relative '../lib/pokemon.rb'
 
 include Pktool
 
-describe "Pokemonn" do
+describe "Nature" do
+  it "should fecth nature effect" do
+    n = Pokemon::Nature[:まじめ.to_s]
+    expect(n.A).to eq 1.0
+  end
+end
+
+describe "Pokemon" do
   it "should calculate status without nature effect" do
     p = Pokemon.fetch("ガブリアス", {nature: :がんばりや, effort_value: :hAS})
     expect(p.stats).to eq({:H=>184, :A=>182, :B=>115, :C=>100, :D=>105, :S=>154})
