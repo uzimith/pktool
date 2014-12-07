@@ -6,6 +6,8 @@
 2. ダメージ計算
 3. 素早さ判定
 
+データはとりあえず暇ツール(http://blog.livedoor.jp/hima_shi/)のデータベースからです。
+
 ## Installation
 
 Add this line to your application's Gemfile:

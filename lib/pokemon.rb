@@ -5,6 +5,8 @@ module Pktool
   class Pokemon < Sequel::Model(:pokemon)
     attr_accessor :nature, :effort_value, :individual_value, :ability, :item
     attr_accessor :description
+    alias :ev :effort_value
+    alias :iv :individual_value
 
     def self.fetch(name, feature = {})
       pokemon = self.where(name: name).first
@@ -12,14 +14,18 @@ module Pktool
       return pokemon
     end
 
+    def base_stat
+      { H: self.H, A: self.A, B: self.B, C: self.C, D: self.D, S: self.S, 重さ: self.weight}
+    end
+
     def set(feature)
+      @description = feature[:description] || ""
       @nature = feature[:nature] || :がんばりや
       @effort_value = feature[:effort_value] ||  { H: 0, A: 0, B: 0, C: 0, D: 0, S: 0 }
       @individual_value = feature[:individual_value] ||  { H: 31, A: 31, B: 31, C: 31, D: 31, S: 31 }
       @ability = feature[:ability] ||  1
       @item = feature[:item] ||  ""
       @level = feature[:level] || 50
-      @description = feature[:description] || ""
 
       if effort_value.instance_of?(Symbol)
         case effort_value
