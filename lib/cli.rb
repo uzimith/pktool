@@ -14,7 +14,8 @@ end
 module Pktool
 
   class Cli < Thor
-    register(Pktool::Command::Party, "party", "party [COMMAND]", "パーティを編成する")
+    register(Pktool::Command::Party, "party", "party [COMMAND]", "自分のパーティを編成する")
+
     desc "info", "ポケモンの情報を見る"
     def info
 
