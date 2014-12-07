@@ -4,7 +4,9 @@ module Pktool
   class Move < Sequel::Model(:move)
 
     def self.fetch(name)
-      self.where(name: name).first
+      move = self.where(name: name).first
+      raise Error, "存在ない技です。" unless move
+      return move
     end
 
     def damage(attacker, defender)
