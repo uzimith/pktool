@@ -3,6 +3,7 @@ require 'thor/group'
 require 'romaji'
 require 'romaji/core_ext/string'
 require_relative "pokemon"
+require_relative "exceptions"
 
 Dir.glob(File.expand_path(File.join(File.dirname(__FILE__), "command", "*.rb"))) do |path|
   require path
@@ -19,8 +20,13 @@ module Pktool
       pokemons = Pktool::Pokemon.select_map(:name)
       Readline.completion_proc = proc {|s| pokemons.grep(/^#{s.kana!}/) }
 
-      name = Readline.readline('name>', true)
-      pokemon = Pktool::Pokemon.fetch(name)
+      
+      begin
+        pokemon = Pktool::Pokemon.fetch(Readline.readline('name>', true))
+      rescue Error => e
+        puts "<red>#{e.message}</red>".termcolor
+        retry
+      end
 
       puts pokemon.base_stat.map{|k,v| "#{k}#{v} "}.join
     end

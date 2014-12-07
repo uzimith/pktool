@@ -1,5 +1,6 @@
 require 'json'
 require_relative "database"
+require_relative "exceptions"
 
 module Pktool
   class Pokemon < Sequel::Model(:pokemon)
@@ -10,6 +11,7 @@ module Pktool
 
     def self.fetch(name, feature = {})
       pokemon = self.where(name: name).first
+      raise Error, "存在ないポケモンです。" unless pokemon
       pokemon.set(feature)
       return pokemon
     end
