@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Pktool::VERSION
   spec.authors       = ["uzimith"]
   spec.email         = ["uzimith.x9@gmail.com"]
-  spec.description   = %q{pokemon battole support tool}
+  spec.description   = %q{pokemon battle support tool}
   spec.summary       = %q{}
   spec.homepage      = ""
   spec.license       = "MIT"
@@ -19,10 +19,10 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.3"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "sequel"
-  spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "termcolorlight"
-  spec.add_development_dependency "thor"
-  spec.add_development_dependency "romaji"
+  spec.add_development_dependency "rake", "~> 10.4.1"
+  spec.add_development_dependency "sequel", "~> 4.17.0"
+  spec.add_development_dependency "sqlite3", "~> 1.3.10"
+  spec.add_development_dependency "termcolorlight", "~> 1.1.1"
+  spec.add_development_dependency "thor", "~> 0.19.1"
+  spec.add_development_dependency "romaji", "~>0.2.1"
 end
