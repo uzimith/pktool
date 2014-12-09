@@ -41,7 +41,9 @@ module Pktool
     end
 
     def defeat
-
+      hp = @defender.statistics(:H)
+      damage = self.damage
+      return {num: (hp.to_f / damage[:min]).ceil, rate: (damage[:min] / hp.to_f)}
     end
 
   end

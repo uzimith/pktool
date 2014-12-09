@@ -20,10 +20,7 @@ module Pktool
 
     desc "info", "ポケモンの情報を見る"
     def info
-
-      builder = PokemonBuilder.new
-      pokemon = builder.pokemon
-
+      pokemon = Builder.pokemon
       puts "<underline>種族値</underline>".termcolor
       puts pokemon.base_stat.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
       puts "<underline>能力値</underline>".termcolor
@@ -34,7 +31,6 @@ module Pktool
 
     desc "damage", "ダメージ計算する"
     def damage
-
       puts "<underline>攻撃側の指定</underline>".termcolor
       attacker = Builder.pokemon
 
@@ -44,8 +40,15 @@ module Pktool
       puts "<underline>技の指定</underline>".termcolor
       move = Builder.move(attacker, defender)
 
-
+      puts ""
+      puts "<underline>攻撃側</underline>".termcolor
+      puts attacker.name + " " + attacker.stats.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
+      puts "<underline>防御側</underline>".termcolor
+      puts defender.name + " " + defender.stats.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
+      puts
       puts move.damage.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
+      defeat = move.defeat
+      puts "<bold>確定数</bold>:<red>#{defeat[:num]}回</red> (#{'%.2f' % (defeat[:rate] * 100)}%) ".termcolor
 
     end
 
