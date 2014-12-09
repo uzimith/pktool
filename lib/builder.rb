@@ -1,15 +1,12 @@
 require_relative 'pokemon'
+require_relative 'move'
 require_relative 'log'
 
 module Pktool
 
-    class PokemonBuilder
+    class Builder
 
-      def initialize
-        readline
-      end
-
-      def readline
+      def self.pokemon
         pokemons = Pokemon.select_map(:name)
         natures = Pokemon::Nature.select_map(:name)
         name = fetch("なまえ", pokemons)
@@ -25,17 +22,22 @@ module Pktool
         feature[:individual_value] = fetch("個体値(default: 6V)") do |input|
           { H: 31, A: 31, B: 31, C: 31, D: 31, S: 31 }
         end
-        @pokemon = Pokemon.fetch(name, feature)
+        return Pokemon.fetch(name, feature)
       end
 
+      def self.move(attacker, defender)
+        moves = Move.select_map(:name)
+        move = fetch("わざ", moves)
+        move = Move.fetch(move, attacker, defender)
+      end
 
-      def fetch(name, completion = [])
+      def self.fetch(name, completion = [])
         Readline.completion_append_character = ""
         Readline.completion_proc = proc {|s|
           completion.grep(/^#{Romaji.romaji2kana(s)}|#{Romaji.romaji2kana(s, :kana_type => :hiragana)}/)
         }
         begin
-          fetch = Readline.readline(name + '>', true)
+          fetch = ::Readline.readline(name + '>', true)
           raise Error, "対象が見つかりません" unless completion.empty? or completion.include?(fetch)
           if block_given?
             return yield(fetch)
@@ -47,14 +49,6 @@ module Pktool
           retry
         end
 
-      end
-
-      def fetch_name
-
-      end
-
-      def pokemon
-        return @pokemon
       end
 
     end
