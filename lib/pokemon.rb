@@ -20,11 +20,17 @@ module Pktool
     alias :ev :effort_value
     alias :iv :individual_value
 
+    @@ways = [:AS, :CS, :hAS, :hCS, :HB, :HD, :HAs, :HCs]
+
     def self.fetch(name, feature = {})
       pokemon = self.where(name: name).first
       raise Error, "存在ないポケモンです。" unless pokemon
       pokemon.set(feature)
       return pokemon
+    end
+
+    def self.ways
+      return @@ways
     end
 
     def base_stat
@@ -40,8 +46,12 @@ module Pktool
       @item = feature[:item] ||  ""
       @level = feature[:level] || 50
 
-      if effort_value.instance_of?(Symbol)
+      if effort_value.instance_of?(Symbol) && @@ways.include?(effort_value)
         case effort_value
+        when :AS
+          @effort_value     = { H: 0, A: 252, B: 0, C: 0, D: 0, S: 252 }
+        when :CS
+          @effort_value     = { H: 0, A: 0, B: 0, C: 252, D: 0, S: 252 }
         when :hAS
           @effort_value     = { H: 6, A: 252, B: 0, C: 0, D: 0, S: 252 }
         when :hCS
