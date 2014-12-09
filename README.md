@@ -11,6 +11,12 @@ Pktoolはポケモンのレート対戦の技選択時間１分の間になる�
 
 データはとりあえず暇ツール(http://blog.livedoor.jp/hima_shi/)のデータベースからです。
 
+## インストール
+
+```
+gem install pktool
+```
+
 ## 使い方
 
 ```
