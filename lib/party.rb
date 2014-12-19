@@ -6,17 +6,18 @@ module Pktool
   class Party
     attr_accessor :list
 
-    @@json_path = "data/user/party.json"
+    @@party_path = "data/user/"
 
-    def initialize
-      json = open(@@json_path) do |io|
+    def initialize(name = "party")
+      @file_path = @@party_path + "#{name}.json"
+      json = open(@file_path) do |io|
         JSON.load(io, nil, { symbolize_names: true})
       end
       @list = json.map {|j| Pokemon.fetch(j[:name], j)}
     end
 
     def save
-      open(@@json_path, 'w') do |io|
+      open(@file_path, 'w') do |io|
         JSON.dump(@list.map{|p| p.to_h}, io)
       end
     end

@@ -1,4 +1,5 @@
 require_relative 'pokemon'
+require_relative 'party'
 require_relative 'move'
 require_relative 'log'
 
@@ -7,6 +8,18 @@ module Pktool
     class Builder
 
       def self.pokemon
+        party = Party.new
+        command = fetch("command")
+        if(command == "new")
+          return self.new_pokemon
+        end
+        if(command =~ /^\d+$/)
+          return party[command.to_i]
+        end
+        warn "Not found."
+      end
+
+      def self.new_pokemon
         pokemons = Pokemon.select_map(:name)
         natures = Pokemon::Nature.select_map(:name)
         name = fetch("なまえ", pokemons)
