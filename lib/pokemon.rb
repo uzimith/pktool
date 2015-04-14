@@ -84,6 +84,15 @@ module Pktool
       [:H, :A, :B, :C, :D, :S].map { |name| [name, statistics(name)]}.to_h
     end
 
+    def types
+      type_effect = open("data/type.json") do |io|
+        JSON.load(io)
+      end
+      Hash[type_effect.keys.map do |t|
+        [t, type_effect[type1][t] * type_effect[type2][t]]
+      end]
+    end
+
     def to_h
       {
         name: name,

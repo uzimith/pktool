@@ -25,8 +25,9 @@ module Pktool
       puts pokemon.base_stat.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
       puts "<underline>能力値</underline>".termcolor
       puts pokemon.stats.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
-
-      #TODO: 相性
+      puts "<underline>相性</underline>".termcolor
+      puts pokemon.types.select{|k,v| v > 1 }.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
+      puts pokemon.types.select{|k,v| v < 1 }.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
     end
 
     desc "damage", "ダメージ計算する"
