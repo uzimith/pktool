@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "bundler", "~> 1.3"
   spec.add_runtime_dependency "rake", "~> 10.4.1"
-  spec.add_runtime_dependency "sequel", "~> 4.17.0"
+  spec.add_runtime_dependency "activerecord", "~> 4.2.1"
   spec.add_runtime_dependency "sqlite3", "~> 1.3.10"
   spec.add_runtime_dependency "termcolorlight", "~> 1.1.1"
   spec.add_runtime_dependency "thor", "~> 0.19.1"
