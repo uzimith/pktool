@@ -77,8 +77,13 @@ module Pktool
       [:H, :A, :B, :C, :D, :S].map { |name| [name, statistics(name)]}.to_h
     end
 
-    def ranked_statistics(name)
-      statistics(name) * rank_effect
+    def effected_statistics(name)
+      effected = statistics(name)
+      effected *= rank_effect
+      effected *= 1.5 if name == :A && @item == "こだわりハチマキ"
+      effected *= 1.5 if name == :C && @item == "こだわりメガネ"
+
+      effected
     end
 
     def rank_effect

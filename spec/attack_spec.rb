@@ -54,4 +54,22 @@ describe "Move" do
     expect(a.damage).to eq({min: 37, max: 43})
     # pokemon-trainer: expect(a.damage).to eq({min: 36, max: 43})
   end
+
+  it "should calculate the damage with こだわりハチマキ" do
+    attacker = Pokemon.fetch("ガブリアス", {nature: :いじっぱり, effort_value: :hAS, item: "こだわりハチマキ"})
+    defender = Pokemon.fetch("クレセリア", {nature: :ずぶとい, effort_value: :HB})
+    a = Attack.new("げきりん", attacker, defender)
+
+    expect(a.damage).to eq({min: 108, max: 127})
+    # pokemon-trainer: expect(a.damage).to eq({min: 36, max: 43})
+  end
+
+  it "should calculate the damage with こだわりハチマキ" do
+    attacker = Pokemon.fetch("ラティオス", {nature: :ひかえめ, effort_value: :hCS, item: "こだわりメガネ"})
+    defender = Pokemon.fetch("クレセリア", {nature: :ずぶとい, effort_value: :HB})
+    a = Attack.new("りゅうせいぐん", attacker, defender)
+
+    expect(a.damage).to eq({min: 147, max: 173})
+    # pokemon-trainer: expect(a.damage).to eq({min: 147, max: 174})
+  end
 end
