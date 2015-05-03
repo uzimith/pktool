@@ -43,7 +43,7 @@ module Pktool
     end
 
     def fetch_base_damage
-      ((@move.power * @attacker.statistics(@attack_stat) * (@level * 2.0 / 5.0 + 2.0 )) / @defender.statistics(@defence_stat) / 50.0 * @effect_rate + 2.0) * @type_rate
+      ((@move.power * @attacker.ranked_statistics(@attack_stat) * (@level * 2.0 / 5.0 + 2.0 )) / @defender.ranked_statistics(@defence_stat) / 50.0 * @effect_rate * type_match + 2.0) * @type_rate
     end
 
     def damage

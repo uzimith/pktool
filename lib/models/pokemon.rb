@@ -37,6 +37,7 @@ module Pktool
       @ability = feature[:ability] ||  1
       @item = feature[:item] ||  ""
       @level = feature[:level] || 50
+      @rank = feature[:rank] || 1
 
       if effort_value.instance_of?(Symbol) && @@ways.include?(effort_value)
         case effort_value
@@ -74,6 +75,18 @@ module Pktool
 
     def stats
       [:H, :A, :B, :C, :D, :S].map { |name| [name, statistics(name)]}.to_h
+    end
+
+    def ranked_statistics(name)
+      statistics(name) * rank_effect
+    end
+
+    def rank_effect
+      if @rank == 1
+        1.0
+      else
+        @rank > 0 ? (@rank.abs + 2.0) / 2.0 : 2.0 / (@rank.abs + 2.0)
+      end
     end
 
     def types
