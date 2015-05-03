@@ -11,11 +11,8 @@ module Pktool
       @defender = defender
       @effects = []
       @level  = 50.0
-      if [@attacker.type1, @attacker.type2].include?(@move.attack_type)
-        @effect_rate = 1.5
-      else
-        @effect_rate = 1.0
-      end
+      @effect_rate = 1.0
+      @type_match = [attacker.type1, attacker.type2].include?(move.attack_type)
       @type_rate = 1.0
       @vital_rate = 1.5
     end
@@ -29,6 +26,10 @@ module Pktool
       end
       @type_rate *= type_effect[@defender.type1][@move.attack_type]
       @type_rate *= type_effect[@defender.type2][@move.attack_type] unless @defender.type2.empty?
+    end
+
+    def type_match
+       @type_match ? 1.5 : 1.0
     end
 
     def select_move_type
