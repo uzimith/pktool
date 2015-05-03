@@ -1,8 +1,8 @@
-require_relative 'pokemon'
-require_relative "nature"
-require_relative 'party'
-require_relative 'move'
-require_relative 'log'
+require_relative '../models/pokemon'
+require_relative "../models/nature"
+require_relative '../models/move'
+require_relative '../party'
+require_relative '../log'
 
 module Pktool
 

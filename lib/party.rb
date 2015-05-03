@@ -1,5 +1,5 @@
 require 'json'
-require_relative "pokemon"
+require_relative "models/pokemon"
 
 module Pktool
 

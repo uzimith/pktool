@@ -2,12 +2,12 @@ require 'thor'
 require 'thor/group'
 require 'romaji'
 require 'romaji/core_ext/string'
-require_relative "log"
-require_relative "version"
-require_relative "pokemon"
-require_relative "move"
 require_relative "builder"
-require_relative "exceptions"
+require_relative "../log"
+require_relative "../version"
+require_relative "../exceptions"
+require_relative "../models/pokemon"
+require_relative "../models/move"
 
 Dir.glob(File.expand_path(File.join(File.dirname(__FILE__), "command", "*.rb"))) do |path|
   require path

@@ -1,5 +1,4 @@
 require_relative "database"
-require_relative "exceptions"
 
 module Pktool
   class Nature < ActiveRecord::Base

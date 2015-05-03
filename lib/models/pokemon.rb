@@ -1,6 +1,5 @@
 require 'json'
 require_relative "database"
-require_relative "exceptions"
 require_relative "nature"
 
 

@@ -1,5 +1,5 @@
-require_relative "../party"
-require_relative "../pokemon"
+require_relative "../../party"
+require_relative "../../models/pokemon"
 require 'termcolorlight'
 
 module Pktool

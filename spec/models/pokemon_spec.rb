@@ -1,4 +1,4 @@
-require_relative '../lib/pokemon.rb'
+require_relative '../../lib/models/pokemon.rb'
 
 include Pktool
 
