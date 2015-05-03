@@ -16,11 +16,23 @@ end
 module Pktool
 
   class Cli < Thor
-    register(Pktool::Command::Party, "party", "party [COMMAND]", "自分のパーティを編成する")
+    # register(Pktool::Command::Party, "party", "party [COMMAND]", "自分のパーティを編成する")
 
     desc "info", "ポケモンの情報を見る"
     def info
-      pokemon = Builder.pokemon
+      pokemon = Builder.default_pokemon
+      puts "<underline>図鑑番号</underline>".termcolor
+      puts pokemon.pokemon_id
+      puts "<underline>種族値</underline>".termcolor
+      puts pokemon.base_stat.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
+      puts "<underline>相性</underline>".termcolor
+      puts pokemon.types.select{|k,v| v > 1 }.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
+      puts pokemon.types.select{|k,v| v < 1 }.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
+    end
+
+    desc "status", "ポケモンのステータスを見る"
+    def status
+      pokemon = Builder.new_pokemon
       puts "<underline>種族値</underline>".termcolor
       puts pokemon.base_stat.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
       puts "<underline>能力値</underline>".termcolor
@@ -33,10 +45,10 @@ module Pktool
     desc "damage", "ダメージ計算する"
     def damage
       puts "<underline>攻撃側の指定</underline>".termcolor
-      attacker = Builder.pokemon
+      attacker = Builder.new_pokemon
 
       puts "<underline>防御側の指定</underline>".termcolor
-      defender = Builder.pokemon
+      defender = Builder.new_pokemon
 
       puts "<underline>技の指定</underline>".termcolor
       move = Builder.move(attacker, defender)

@@ -1,4 +1,5 @@
 require_relative 'pokemon'
+require_relative "nature"
 require_relative 'party'
 require_relative 'move'
 require_relative 'log'
@@ -7,7 +8,7 @@ module Pktool
 
     class Builder
 
-      def self.pokemon
+      def self.party_pokemon
         party = Party.new
         command = fetch("command")
         if(command == "new")
@@ -20,8 +21,8 @@ module Pktool
       end
 
       def self.new_pokemon
-        pokemons = Pokemon.select_map(:name)
-        natures = Pokemon::Nature.select_map(:name)
+        pokemons = Pokemon.pluck(:name)
+        natures = Nature.pluck(:name)
         name = fetch("なまえ", pokemons)
         feature = {} 
         feature[:nature] = fetch("せいかく", natures) do |input| input.to_sym end
@@ -38,8 +39,18 @@ module Pktool
         return Pokemon.fetch(name, feature)
       end
 
+      def self.default_pokemon
+        pokemons = Pokemon.pluck(:name)
+        name = fetch("なまえ", pokemons)
+        feature = {}
+        feature[:nature] = Nature.first.name
+        feature[:effort_value] = { H: 0, A: 0, B: 0, C: 0, D: 0, S: 0 }
+        feature[:individual_value] = { H: 31, A: 31, B: 31, C: 31, D: 31, S: 31 }
+        return Pokemon.fetch(name, feature)
+      end
+
       def self.move(attacker, defender)
-        moves = Move.select_map(:name)
+        moves = Move.pluck(:name)
         move = fetch("わざ", moves)
         move = Move.fetch(move, attacker, defender)
       end

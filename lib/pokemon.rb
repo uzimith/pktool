@@ -1,19 +1,12 @@
 require 'json'
 require_relative "database"
 require_relative "exceptions"
+require_relative "nature"
+
 
 module Pktool
 
-  class Pokemon < Sequel::Model(:pokemon)
-
-    class Nature < Sequel::Model(:nature)
-      def to_s
-        self.name.to_s
-      end
-      def to_sym
-        self.name.to_sym
-      end
-    end
+  class Pokemon < ActiveRecord::Base
 
     attr_accessor :nature, :effort_value, :individual_value, :ability, :item
     attr_accessor :description
@@ -23,7 +16,7 @@ module Pktool
     @@ways = [:AS, :CS, :hAS, :hCS, :HB, :HD, :HAs, :HCs]
 
     def self.fetch(name, feature = {})
-      pokemon = self.where(name: name).first
+      pokemon = self.find_by_name(name)
       raise Error, "存在ないポケモンです。" unless pokemon
       pokemon.set(feature)
       return pokemon
@@ -39,7 +32,7 @@ module Pktool
 
     def set(feature)
       @description = feature[:description] || ""
-      @nature = Nature[feature[:nature].to_s] || Nature["がんばりや"]
+      @nature = Nature.find_by_name(feature[:nature]) || Nature.find_by_name("がんばりや")
       @effort_value = feature[:effort_value] ||  { H: 0, A: 0, B: 0, C: 0, D: 0, S: 0 }
       @individual_value = feature[:individual_value] ||  { H: 31, A: 31, B: 31, C: 31, D: 31, S: 31 }
       @ability = feature[:ability] ||  1

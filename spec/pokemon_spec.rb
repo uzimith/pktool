@@ -4,7 +4,7 @@ include Pktool
 
 describe "Nature" do
   it "should fecth nature effect" do
-    n = Pokemon::Nature[:まじめ.to_s]
+    n = Nature.find_by_name(:まじめ)
     expect(n.A).to eq 1.0
   end
 end
@@ -37,7 +37,7 @@ describe "Pokemon" do
 
   it "should has type effect"  do
     p = Pokemon.fetch("ガブリアス", {nature: :いじっぱり, effort_value: :hAS})
-    expect(p.types).to eq({"ノーマル"=>1, "ほのお"=>0.5, "みず"=>1.0, "でんき"=>0.0, "くさ"=>1.0, "こおり"=>4, "かくとう"=>1, "どく"=>0.5, "じめん"=>1, "ひこう"=>1, "エスパー"=>1, "むし"=>1, "いわ"=>0.5, "ゴースト"=>1, "ドラゴン"=>2, "あく"=>1, "はがね"=>1, "フェアリー"=>2})
+    expect(p.types["氷"]).to eq(4)
   end
 end
 
