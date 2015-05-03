@@ -39,5 +39,15 @@ describe "Pokemon" do
     p = Pokemon.fetch("ガブリアス", {nature: :いじっぱり, effort_value: :hAS})
     expect(p.types["氷"]).to eq(4)
   end
+
+  it "should has moves list"  do
+    p = Pokemon.fetch("ガブリアス", {nature: :いじっぱり, effort_value: :hAS})
+    expect(p.moves.pluck(:name)).to include("げきりん")
+  end
+
+  it "should has moves list"  do
+    p = Pokemon.fetch("ガブリアス", {nature: :いじっぱり, effort_value: :hAS})
+    expect(p.type_ranked_moves[:物理].find_by_attack_type("地").name).to include("じしん")
+  end
 end
 

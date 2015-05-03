@@ -26,8 +26,13 @@ module Pktool
       puts "<underline>種族値</underline>".termcolor
       puts pokemon.base_stat.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
       puts "<underline>相性</underline>".termcolor
-      puts pokemon.types.select{|k,v| v > 1 }.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
-      puts pokemon.types.select{|k,v| v < 1 }.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
+      puts "4.0: " + pokemon.types.select{|k,v| v == 4.00 }.map{|k,v| "<red>#{k}</red>".termcolor}.join
+      puts "2.0: " + pokemon.types.select{|k,v| v == 2.00 }.map{|k,v| "<red>#{k}</red>".termcolor}.join
+      puts "1.0: " + pokemon.types.select{|k,v| v == 1.00 }.map{|k,v| "#{k}".termcolor}.join
+      puts "1/2: " + pokemon.types.select{|k,v| v == 0.50 }.map{|k,v| "<blue>#{k}</blue>".termcolor}.join
+      puts "1/4: " + pokemon.types.select{|k,v| v == 0.25 }.map{|k,v| "<blue>#{k}</blue>".termcolor}.join
+      puts ""
+      power(pokemon)
     end
 
     desc "status", "ポケモンのステータスを見る"
@@ -40,6 +45,16 @@ module Pktool
       puts "<underline>相性</underline>".termcolor
       puts pokemon.types.select{|k,v| v > 1 }.map{|k,v| "<bold>#{k}</bold>:<red>#{v}</red> ".termcolor}.join
       puts pokemon.types.select{|k,v| v < 1 }.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
+    end
+
+    desc "power", "ポケモンのタイプ別の威力を見る"
+    def power(pokemon = Builder.default_pokemon)
+      pokemon.type_ranked_moves.each do |kind, moves|
+        puts "<underline>#{kind}</underline>".termcolor
+        moves.each do |move|
+          puts "<bold>#{move.attack_type}</bold> 威力:#{'%3d' % move.power} 命中:#{'%3d' % move.accuracy} #{move.name}".termcolor
+        end
+      end
     end
 
     desc "damage", "ダメージ計算する"

@@ -1,11 +1,15 @@
 require 'json'
 require_relative "database"
 require_relative "nature"
+require_relative "acquisition"
+require_relative "move"
 
 
 module Pktool
 
   class Pokemon < ActiveRecord::Base
+    has_many :acquisitions
+    has_many :moves, through: :acquisitions
 
     attr_accessor :nature, :effort_value, :individual_value, :ability, :item
     attr_accessor :description
@@ -98,9 +102,15 @@ module Pktool
       type_effect = open("data/type.json") do |io|
         JSON.load(io)
       end
-      Hash[type_effect.keys.map do |t|
-        [t, type_effect[type1][t] * type_effect[type2][t]]
-      end]
+      Hash[type_effect.keys.map { |t| [t, type_effect[type1][t] * (type2.present? ? type_effect[type2][t]: 1.0)] }]
+    end
+
+    def type_ranked_moves
+      list = moves.group("move_type, attack_type").having("max(power)").order("power desc")
+      {
+        "物理": list.where(move_type: "物理"),
+        "特殊": list.where(move_type: "特殊"),
+      }
     end
 
     def to_h
