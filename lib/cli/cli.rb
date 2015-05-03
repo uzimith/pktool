@@ -51,7 +51,7 @@ module Pktool
       defender = Builder.new_pokemon
 
       puts "<underline>技の指定</underline>".termcolor
-      move = Builder.move(attacker, defender)
+      attack = Builder.attack(attacker, defender)
 
       puts ""
       puts "<underline>攻撃側</underline>".termcolor
@@ -59,8 +59,8 @@ module Pktool
       puts "<underline>防御側</underline>".termcolor
       puts defender.name + " " + defender.stats.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
       puts
-      puts move.damage.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
-      defeat = move.defeat
+      puts attack.damage.map{|k,v| "<bold>#{k}</bold>:<blue>#{v}</blue> ".termcolor}.join
+      defeat = attack.defeat
       puts "<bold>確定数</bold>:<red>#{defeat[:num]}回</red> (#{'%.2f' % (defeat[:rate] * 100)}%) ".termcolor
 
     end

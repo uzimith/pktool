@@ -1,6 +1,7 @@
 require_relative '../models/pokemon'
 require_relative "../models/nature"
 require_relative '../models/move'
+require_relative '../attack'
 require_relative '../party'
 require_relative '../log'
 
@@ -49,10 +50,10 @@ module Pktool
         return Pokemon.fetch(name, feature)
       end
 
-      def self.move(attacker, defender)
+      def self.attack(attacker, defender)
         moves = Move.pluck(:name)
         move = fetch("わざ", moves)
-        move = Move.fetch(move, attacker, defender)
+        Attack.new(move, attacker, defender)
       end
 
       def self.fetch(name, completion = [])
