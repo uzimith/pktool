@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pktool (0.2.0)
+    pktool (0.2.1)
       activerecord (~> 4.2.1)
       bundler (~> 1.3)
       rake (~> 10.4.1)
