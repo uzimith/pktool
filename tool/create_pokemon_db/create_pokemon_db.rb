@@ -88,15 +88,29 @@ Nokogiri::HTML.parse(open(move_url), nil).css("#moveTbl tr")[1..-1].each do |tr|
   )
 end
 
+
+def convert_name(name)
+  name.gsub!(/(.*?)\(Ｍ\)/, 'メガ\1')
+  name.gsub!(/(.*?)\(Ｘ\)/, 'メガ\1X')
+  name.gsub!(/(.*?)\(Ｙ\)/, 'メガ\1Y')
+  name.gsub!(/(.*?)\(原\)/, 'ゲンシ\1')
+  name.gsub!(/(.*?)\(霊\)/, '霊獣\1')
+  name.gsub!(/(.*?)\(♂\)/, '\1　オス')
+  name.gsub!(/(.*?)\(♀\)/, '\1　メス')
+  name.gsub!(/(.*?)\(攻\)/, '\1　ブレードフォルム')
+  name.gsub!(/(.*?)\((.*?)\)/, '\1\2')
+  name
+end
 Nokogiri::HTML.parse(open(pokemon_url), nil).css("#pokemonTbl tr")[1..-1].each do |tr|
   puts tr.children[0].text
   href = tr.css("a").first.attribute('href').value
   detail = Nokogiri::HTML.parse(open(URI.join(pokemon_url, href)), nil)
   infomation = detail.xpath("id('biLeft')/section[1]//table//tr")
   abilities = detail.xpath("id('biLeft')/section[3]//table//tr")
+
   pokemon = Pokemon.create(
     pokemon_id: tr.children[0].text,
-    name: tr.children[1].text,
+    name: convert_name(tr.children[1].text),
     type1: tr.children[2].text,
     type2: tr.children[3].text,
     H: tr.children[4].text,
